@@ -1,4 +1,13 @@
+"""
+a
+"""
+
 from flask import Flask
+from pymongo import MongoClient
+client = MongoClient()
+db = client.test
+collection = db.words
+
 
 app = Flask(__name__)
 
