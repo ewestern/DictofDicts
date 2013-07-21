@@ -9,7 +9,7 @@ from models import words
 
 app = Flask(__name__)
 TAGS = {
-"The Utter and Heartbreaking Stupidity": "http://www.goodreads.com/quotes/127072-talk-talk-talk-the-utter-and-heartbreaking-stupidity-of-words",
+"The Utter and Heartbreaking Stupidity": "http://en.wikipedia.org/wiki/Mosquitoes_(novel)",
 "From the Beginning." : "http://en.wikipedia.org/wiki/John_1:1",
 "Strain, Crack and Sometimes Break" : "http://www.artofeurope.com/eliot/eli5.htm"
 }
@@ -22,7 +22,7 @@ def main():
 
 @app.route("/partial/<word>", methods = ['GET'])
 def get_shortcut(word):
-	return jsonify(**words.find_shortcuts(word))
+	return jsonify(**words.find_words(word))
 
 @app.route('/words/<word>', methods = ['GET'])
 def get_word(word):

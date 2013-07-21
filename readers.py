@@ -5,27 +5,35 @@ import re
 class BaseReader(object):
 	REGEX = ''
 	NAME = ''
-	def __init__(self, path):
-		self.path = path
-
-	def create_tree(self):
-		with open(self.path, 'r') as d:
-			string = d.read()
-			self.tree = re.findall(self.REGEX, string)
-
+	PATH = ''
 	def create_entries(self):
+		with open(self.PATH, 'r') as d:
+			string = d.read()
+			tree = re.findall(self.REGEX, string)
+		self.entries = [{'word' : word.capitalize(),
+						'dic' : self.NAME,
+						'def' : ' '.join(dfn.split())}
+							for word, dfn in tree]
+	def coll_insert(self, collection):
+		for doc in self.entries:
+			collection.update({'word': doc['word']},
+				{'$push' :
+					{"defs": {
+						'dic' : doc['dic'],
+						'def' : doc['def']
+						}
+					}
+				},
+				upsert = True
+			)
 
-		return [{'word' : word.capitalize(),
-				'name' : self.NAME,
-				'def' : ' '.join(dfn.split())}
-					for word, dfn in self.tree]
 
 class EnglishProverbs(BaseReader):
 	REGEX = r"[\d]+\.\s([A-Z]+)\.([a-zA-Z\n\s\.,]+)"
 	NAME = "Dictionary of English Proverbs and Proverbial Phrases"
-
+	PATH = "static/dicts/english_proverbs.txt"
 
 class FoolishDict(BaseReader):
-	# REGEX = r"=([A-Z ]+)=\s([\w\s\.\"\',_\-;]+)"
 	REGEX = "=([A-Z ]+)=[\s]+[\[Illustration\]]*[\s]*([\w\s;,-\.\"\'!]+)"
 	NAME = 'The Foolish Dictionary'
+	PATH = "static/dicts/foolish_dict.txt"

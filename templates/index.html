@@ -25,16 +25,22 @@
 
 
 
-        <div id = "searchbox" autocomplete = "off" class="hero-unit span10 offset2">
+        <div id = "searchbox" class="hero-unit span10 offset2">
           <h1><a href = "{{ link }}">{{ title }}</a></h1>
           <br>
           <p>
-          <input type="text" class="input-xxlarge search-query" id = "search">
+          <input type="text" autocomplete = "off" class="input-xxlarge search-query" id = "search">
             <a class="btn btn-primary btn-large">
               Search
             </a>
           </p>
         </div>
+
+        <div id = "dic_view" class = "span10 offset2 well">
+
+
+        </div>
+
         <script data-main="../static/js/main" src="../static/js/require.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

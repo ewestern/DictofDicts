@@ -2,7 +2,7 @@ requirejs.config({
     paths: {
         "jquery": "jquery-2.0.3.min",
         "underscore": "underscore-min",
-        "backbone": "backbone-min",
+        "backbone": "backbone",
         "jquery.bootstrap": "bootstrap.min"
     },
 
@@ -21,5 +21,6 @@ requirejs.config({
 });
 
 require(['app'], function(App){
-    new App;
+    var app = new App();
+    app.render()
 });
