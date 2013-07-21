@@ -13,7 +13,12 @@ class BaseReader(object):
 			string = d.read()
 			self.tree = re.findall(self.REGEX, string)
 
-	def create_entries(self): return [{word : (self.NAME, dfn) }for word, dfn in self.tree]
+	def create_entries(self):
+
+		return [{'word' : word.capitalize(),
+				'name' : self.NAME,
+				'def' : ' '.join(dfn.split())}
+					for word, dfn in self.tree]
 
 class EnglishProverbs(BaseReader):
 	REGEX = r"[\d]+\.\s([A-Z]+)\.([a-zA-Z\n\s\.,]+)"
@@ -21,5 +26,6 @@ class EnglishProverbs(BaseReader):
 
 
 class FoolishDict(BaseReader):
-	REGEX = r"=([A-Z ]+)=\s([\w\s\.\"\',_\-]+)"
+	# REGEX = r"=([A-Z ]+)=\s([\w\s\.\"\',_\-;]+)"
+	REGEX = "=([A-Z ]+)=[\s]+[\[Illustration\]]*[\s]*([\w\s;,-\.\"\'!]+)"
 	NAME = 'The Foolish Dictionary'
